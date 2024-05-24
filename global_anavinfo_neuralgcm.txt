@@ -1,0 +1,16 @@
+state_vector::  
+!var     level  itracer source     funcof
+!tsen     37       0     met_guess    tsen
+tv       37       0     met_guess    tv
+ps        1       0     met_guess    ps
+::
+
+control_vector_enkf::
+!var     level  itracer as/tsfc_sdv  an_amp0   source  funcof
+ u        37      0       1.00        -1.0     state    u,v
+ v        37      0       1.00        -1.0     state    u,v
+ z        37      0       1.00        -1.0     state    z
+ tv       37      0       1.50        -1.0     state    tsen
+ q        37      1       1.50        -1.0     state    q
+ ps        1      0       1.20        -1.0     state    ps    
+::

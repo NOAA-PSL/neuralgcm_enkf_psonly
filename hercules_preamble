@@ -1,0 +1,23 @@
+#!/bin/sh
+##SBATCH -q urgent
+#SBATCH -t 03:00:00
+##SBATCH -A gsienkf
+##SBATCH -A isp-1    
+#SBATCH -A da-cpu  
+#SBATCH -N 20  
+#SBATCH --ntasks-per-node=80
+#SBATCH -p hercules
+#SBATCH -J neuralgcm_enkf_psonly
+#SBATCH -e neuralgcm_enkf_psonly.err
+#SBATCH -o neuralgcm_enkf_psonly.out
+
+export NODES=$SLURM_NNODES
+export corespernode=$SLURM_CPUS_ON_NODE
+export machine='hercules'
+
+export fg_proc=$corespernode
+export fg_threads=1 
+export enkf_threads=16
+export write_groups=1
+export write_tasks=8 
+export layout="3, 4"

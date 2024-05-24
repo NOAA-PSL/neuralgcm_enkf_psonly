@@ -1,0 +1,118 @@
+correlated_observations::
+! isis          method   kreq   kmult   type    cov_file
+iasi_metop-c      2       0.0     1.0    sea     Rcov_iasicsea
+iasi_metop-b      2       0.0     1.0    sea     Rcov_iasibsea
+iasi_metop-c      2       0.0     1.0    land    Rcov_iasicland
+iasi_metop-b      2       0.0     1.0    land    Rcov_iasibland
+cris-fsr_n20      2       0.0     1.0    sea     Rcov_crisn20
+cris-fsr_npp      2       0.0     1.0    sea     Rcov_crisnpp
+::
+
+met_guess::
+!var     level    crtm_use    desc              orig_name
+  ps        1      -1         surface_pressure     ps
+  z         1      -1         geopotential_height  phis
+  u        32       2         zonal_wind           u
+  v        32       2         meridional_wind      v
+  div      32      -1         zonal_wind           div
+  vor      32      -1         meridional_wind      vor
+  tv       32       2         virtual_temperature  tv
+  q        32       2         specific_humidity    sphu
+  oz       32       2         ozone                ozone
+  cw       32      10         cloud_condensate     cw
+  ql       32      12         cloud_liquid         ql 
+  qi       32      12         cloud_ice            qi 
+::
+
+state_derivatives::
+!var  level  src
+ ps   1      met_guess
+ u     32    met_guess
+ v     32    met_guess
+ tv    32    met_guess
+ q     32    met_guess
+ oz    32    met_guess
+ cw    32    met_guess
+ prse  33    met_guess
+::
+
+state_tendencies::
+!var  levels  source
+ u     32     met_guess
+ v     32     met_guess
+ tv    32     met_guess
+ q     32     met_guess
+ cw    32     met_guess
+ oz    32     met_guess
+ prse  33     met_guess
+::
+
+state_vector::  
+!var     level  itracer source     funcof
+!u        32      0     met_guess    u
+!v        32      0     met_guess    v
+tv       32      0     met_guess    tv
+!tsen     32      0     met_guess    tv,q
+!q        32      1     met_guess    q
+!oz       32      1     met_guess    oz
+!ql       32      1     met_guess    ql 
+!qi       32      1     met_guess    qi 
+!prse     33      0     met_guess    prse
+!dprs     32      0     met_guess    cw   
+ps        1      0     met_guess    prse
+!sst       1      0     met_guess    sst
+::
+
+
+state_vector_efsoi::
+!var     level  itracer source     funcof
+ u        32      0     met_guess    u
+ v        32      0     met_guess    v
+ tv       32      0     met_guess    tv
+ q        32      1     met_guess    q
+ ps        1      0     met_guess    prse
+::
+
+
+
+control_vector_enkf::
+!var     level  itracer as/tsfc_sdv  an_amp0   source  funcof
+ u        32      0       1.00        -1.0     state    u,v
+ v        32      0       1.00        -1.0     state    u,v
+ ps        1      0       1.20        -1.0     state    prse
+!pst       1      0       1.20        -1.0     state    prse,u,v
+ tv       32      0       1.50        -1.0     state    tv
+ q        32      1       1.50        -1.0     state    q
+!oz       32      1       2.00        -1.0     state    oz
+!dprs     32      0       1.00        -1.0     state    prse
+!sst       1      0       1.00        -1.0     state    sst
+!cw       32      1       1.00        -1.0     state    cw
+!stl       1      0       3.00        -1.0     motley   sst
+!sti       1      0       3.00        -1.0     motley   sst
+::
+
+control_vector::
+!var     level  itracer as/tsfc_sdv  an_amp0   source  funcof
+ sf       32      0       1.00        -1.0     state    u,v
+ vp       32      0       1.00        -1.0     state    u,v
+ ps        1      0       1.20        -1.0     state    prse
+ t        32      0       1.50        -1.0     state    tv
+ q        32      1       1.50        -1.0     state    q
+ oz       32      1       2.00        -1.0     state    oz
+ sst       1      0       1.00        -1.0     state    sst
+ cw       32      1       1.00        -1.0     state    cw
+ stl       1      0       3.00        -1.0     motley   sst
+ sti       1      0       3.00        -1.0     motley   sst
+::
+
+! Following table shows the use of all four prescribed trace gas data.
+! To turn off any one of any combination of trace gas input, add "!"
+! in the first column of that trace gas name.  To use all default
+! trace gas profiles, just delete the following seven lines.
+chem_guess::
+!var     level  itracer crtm_use       type    orig_name
+!ch4      64      1       2             n/a    ch4
+ co2      32      1       0             n/a    co2
+!co       64      1       2             n/a    co
+!n2o      64      1       2             n/a    n2o
+::
