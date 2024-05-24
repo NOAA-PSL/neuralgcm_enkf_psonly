@@ -6,3 +6,7 @@ Differences with UFS workflow:
 For native-model level (sigma) version, use config.sh.sigma and main.sh.sigma (copy to config.sh, main.sh)
 For pressure level version (using model encoder/decoder) use config.sh.plev and main.sh.plev (and getz500_plev.sh for computing
 z500 errors).
+
+copy executables from /work2/noaa/gsienkf/whitaker/neuralgcm_enkf_psonly_sigma/exec_hercules into local exec_hercules directory.
+initial conditions (for sigma levs) available in /work2/noaa/gsienkf/whitaker/neuralgcm_enkf_psonly_sigma/2021083000
+initial conditions (for plevs) available in /work2/noaa/gsienkf/whitaker/neuralgcm_enkf_psonly_plev/2021083000
